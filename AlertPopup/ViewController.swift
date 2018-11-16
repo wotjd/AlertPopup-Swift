@@ -15,6 +15,8 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
 
-
+    @IBAction func onButton(_ sender: Any) {
+//        self.performSegue(withIdentifier: "ShowPopup", sender: nil)
+    }
 }
 
