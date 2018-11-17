@@ -9,11 +9,10 @@
 import UIKit
 
 class TextOnlyPopup {
-    private var innerViewController : InnerTextViewController! = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AlertInnerView_TextOnly") as? InnerTextViewController
-    private var alertViewController : AlertViewController! = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AlertView_Base") as? AlertViewController
+    public var innerViewController : InnerTextViewController! = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AlertInnerView_TextOnly") as? InnerTextViewController
+    public var alertViewController : AlertViewController! = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AlertView_Base") as? AlertViewController
     
-    
-    public func initPopup() {
+    public func createPopup() {
         if let innerVC = self.innerViewController {
             innerVC.loadViewIfNeeded()
             innerVC.contentsText.text = "a\nb\nc\nd\na\nb\nc\nd\n"
@@ -27,6 +26,7 @@ class TextOnlyPopup {
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor.init(displayP3Red: 1, green: 33/255, blue: 33/255, alpha: 1)
         button.setTitle(title, for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
         button.addAction(for: .touchUpInside, completion)
         
         self.alertViewController.setButton(button)
