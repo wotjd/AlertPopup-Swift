@@ -181,6 +181,7 @@
                         <viewLayoutGuide key="safeArea" id="ygG-Ov-urn"/>
                     </view>
                     <connections>
+                        <outlet property="alertView" destination="eTq-Eu-ypP" id="diW-jH-BO3"/>
                         <outlet property="buttonStackView" destination="XoD-JN-03F" id="c0u-7B-jWv"/>
                         <outlet property="innerViewContainer" destination="rI9-wT-HJk" id="xd5-PH-9J8"/>
                         <outlet property="titleLabel" destination="0mL-mw-Au0" id="xBM-Q2-EiW"/>

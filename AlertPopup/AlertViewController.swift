@@ -9,9 +9,11 @@
 import UIKit
 
 class AlertViewController: UIViewController {
+    @IBOutlet weak var alertView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var innerViewContainer: UIView!
     @IBOutlet weak var buttonStackView: UIStackView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +36,12 @@ class AlertViewController: UIViewController {
     
     public func setButton(_ button : UIButton) {
         self.buttonStackView.addArrangedSubview(button)
+    }
+    
+    public func setButtons(_ buttons : [UIButton]) {
+        for button in buttons {
+            self.setButton(button)
+        }
     }
     /*
     // MARK: - Navigation

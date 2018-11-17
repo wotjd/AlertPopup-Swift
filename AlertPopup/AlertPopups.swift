@@ -9,26 +9,73 @@
 import UIKit
 
 class TextOnlyPopup {
-    public var innerViewController : InnerTextViewController! = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AlertInnerView_TextOnly") as? InnerTextViewController
-    public var alertViewController : AlertViewController! = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AlertView_Base") as? AlertViewController
+    private let innerViewController : InnerTextViewController! = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AlertInnerView_TextOnly") as? InnerTextViewController
+    private let alertViewController : AlertViewController! = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AlertView_Base") as? AlertViewController
     
-    public func createPopup() {
-        if let innerVC = self.innerViewController {
-            innerVC.loadViewIfNeeded()
-            innerVC.contentsText.text = "a\nb\nc\nd\na\nb\nc\nd\n"
-            alertViewController.setInnerViewController(viewController: innerVC)
-        } else {
-            print("vc is not inner view")
+    private var buttons : [UIButton] = []
+    
+    private var isPopupLoaded = false
+    public var viewController : AlertViewController {
+        get {
+            if !self.isPopupLoaded {
+                self.alertViewController.setInnerViewController(viewController: self.innerViewController)
+                self.alertViewController.setButtons(self.buttons)
+                self.isPopupLoaded = true
+            }
+            
+            return self.alertViewController
         }
     }
     
+    public var cornerRadius : CGFloat {
+        get {
+            self.alertViewController.loadViewIfNeeded()
+            return self.alertViewController.innerViewContainer.layer.cornerRadius
+        }
+        
+        set {
+            self.alertViewController.loadViewIfNeeded()
+            self.alertViewController.alertView.layer.cornerRadius = newValue;
+            self.alertViewController.alertView.clipsToBounds = true//.layer.masksToBounds = true;
+        }
+    }
+    public var titleText : String? {
+        get {
+            self.alertViewController.loadViewIfNeeded()
+            return self.alertViewController.titleLabel.text
+        }
+        
+        set {
+            self.alertViewController.loadViewIfNeeded()
+            return self.alertViewController.titleLabel.text = newValue
+        }
+    }
+    
+    public var innerText : String? {
+        get {
+            self.innerViewController.loadViewIfNeeded()
+            return self.innerViewController.contentsText.text
+        }
+        
+        set {
+            self.innerViewController.loadViewIfNeeded()
+            self.innerViewController.contentsText.text = newValue
+        }
+    }
+
+    // TODO : add method to be able to apply style
     public func addButton(title : String, _ completion : @escaping ()->() = {}) {
         let button = UIButton(type: .system)
-        button.backgroundColor = UIColor.init(displayP3Red: 1, green: 33/255, blue: 33/255, alpha: 1)
         button.setTitle(title, for: .normal)
-        button.setTitleColor(UIColor.white, for: .normal)
         button.addAction(for: .touchUpInside, completion)
-        
-        self.alertViewController.setButton(button)
+        self.buttons.append(button)
     }
+}
+
+struct ButtonStyle {
+    var titleText : String
+    var titleColor : UIColor
+    var backgroundColor : UIColor
+    var fontName : String
+    var fontSize : Double
 }

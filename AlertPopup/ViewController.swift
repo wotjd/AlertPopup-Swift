@@ -16,27 +16,25 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onButton(_ sender: Any) {
-//        self.performSegue(withIdentifier: "ShowPopup", sender: nil)
         let popup = TextOnlyPopup()
-        popup.alertViewController.loadViewIfNeeded()
-        popup.innerViewController.loadViewIfNeeded()
-        popup.alertViewController.titleLabel.text = "알림"
+        popup.cornerRadius = 7.5
+        popup.titleText = "알림"
+        popup.innerText = """
+        키스의 고유 조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.
+        다람쥐 헌 쳇바퀴에 타고파
+        """
         
         popup.addButton(title: "취소") {
-            popup.alertViewController.dismiss(animated: true, completion: {
+            popup.viewController.dismiss(animated: true, completion: {
                 print("dismissed!")
             })
         }
+        
         popup.addButton(title: "확인") {
             print("confirmed")
         }
         
-        popup.innerViewController.contentsText.text = """
-        키스의 고유 조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다.
-        다람쥐 헌 쳇바퀴에 타고파
-        """
-        popup.alertViewController.setInnerViewController(viewController: popup.innerViewController)
-        self.present(popup.alertViewController, animated: true) {
+        self.present(popup.viewController, animated: true) {
             //
         }
     }
