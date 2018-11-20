@@ -19,7 +19,7 @@ class TextOnlyPopup {
         get {
             if !self.isPopupLoaded {
                 self.alertViewController.setInnerViewController(viewController: self.innerViewController)
-                self.alertViewController.setButtons(self.buttons)
+                self.alertViewController.setButton(self.buttons)
                 self.isPopupLoaded = true
             }
             
@@ -30,7 +30,7 @@ class TextOnlyPopup {
     public var cornerRadius : CGFloat {
         get {
             self.alertViewController.loadViewIfNeeded()
-            return self.alertViewController.innerViewContainer.layer.cornerRadius
+            return self.alertViewController.alertView.layer.cornerRadius
         }
         
         set {
@@ -63,19 +63,20 @@ class TextOnlyPopup {
         }
     }
 
-    // TODO : add method to be able to apply style
-    public func addButton(title : String, _ completion : @escaping ()->() = {}) {
-        let button = UIButton(type: .system)
-        button.setTitle(title, for: .normal)
-        button.addAction(for: .touchUpInside, completion)
+    public func addButton(with button : UIButton) {
         self.buttons.append(button)
     }
-}
-
-struct ButtonStyle {
-    var titleText : String
-    var titleColor : UIColor
-    var backgroundColor : UIColor
-    var fontName : String
-    var fontSize : Double
+    
+    public func addButton(with buttons : [UIButton]) {
+        self.buttons.append(contentsOf: buttons)
+    }
+    
+    public func addButton(with title : String, _ completion : @escaping ()->() = {}) {
+        let button = UIButton(type: .system)
+        button.setTitle(title, for: .normal)
+        
+        button.addAction(for: .touchUpInside, completion)
+        self.addButton(with: button)
+    }
+    // 80
 }

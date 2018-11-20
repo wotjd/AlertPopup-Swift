@@ -38,7 +38,7 @@ class AlertViewController: UIViewController {
         self.buttonStackView.addArrangedSubview(button)
     }
     
-    public func setButtons(_ buttons : [UIButton]) {
+    public func setButton(_ buttons : [UIButton]) {
         for button in buttons {
             self.setButton(button)
         }
